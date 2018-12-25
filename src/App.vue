@@ -1,31 +1,52 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-content>
+      <router-view/>
+
+      <v-card class="navbar" v-if="true" flat>
+        <v-bottom-nav absolute app color="transparent">
+          <v-btn to="/" color="teal" flat value="Home">
+            <span>Home</span>
+            <v-icon>home</v-icon>
+          </v-btn>
+          <v-btn to="/categories" color="teal" flat value="Categories">
+            <span>Categories</span>
+            <v-icon>filter_list</v-icon>
+          </v-btn>
+          <v-btn to="/search" color="teal" flat value="Search">
+            <span>Search</span>
+            <v-icon>search</v-icon>
+          </v-btn>
+
+          <v-btn to="/cart" color="teal" flat value="Cart">
+            <span>Cart</span>
+            <v-icon>shopping_cart</v-icon>
+          </v-btn>
+
+          <v-btn to="/account" color="teal" flat value="Account">
+            <span>Account</span>
+            <v-icon>person</v-icon>
+          </v-btn>
+        </v-bottom-nav>
+      </v-card>
+    </v-content>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      //
+    };
+  }
+};
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+<style scoped>
+.navbar {
+  position: fixed;
+  width: 100%;
 }
 </style>
