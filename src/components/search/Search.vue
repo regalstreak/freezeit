@@ -1,7 +1,11 @@
 <template>
-  <v-card flat>
-    <div class="headline text-xs-center pa-5">Active: Search</div>
-  </v-card>
+  <v-container>
+    <v-layout column>
+      <v-flex xs12>
+        <v-text-field label="Search" solo append-icon="search" autofocus clearable></v-text-field>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

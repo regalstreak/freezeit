@@ -1,7 +1,13 @@
 <template>
-  <v-card flat>
-    <div class="headline text-xs-center pa-5">Active: Categories</div>
-  </v-card>
+  <v-container>
+    <v-layout column>
+      <v-flex xs12>
+        <router-link to="/search">
+          <v-text-field readonly label="Search" solo append-icon="search"></v-text-field>
+        </router-link>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

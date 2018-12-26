@@ -4,7 +4,7 @@
       <router-view/>
     </v-content>
 
-    <v-bottom-nav absolute app value="true" color="transparent">
+    <v-bottom-nav app fixed value="true" >
       <v-btn to="/" color="teal" flat value="Home">
         <span>Home</span>
         <v-icon>home</v-icon>
