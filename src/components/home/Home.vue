@@ -16,6 +16,7 @@
       </v-carousel>
 
       <v-card class="recommendations my-3">
+        <br>
         <h1 style="color: white;" class="text-xs-center py-5">Recommendations</h1>
       </v-card>
 
@@ -24,17 +25,17 @@
       </v-card>
 
       <v-layout>
-          <v-layout row wrap>
-            <v-flex v-for="n in 9" :key="n" xs6>
-              <v-card flat tile class="pa-1">
-                <v-img
-                  :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"
-                  height="230px"
-                ></v-img>
-              </v-card>
-            </v-flex>
-          </v-layout>
+        <v-layout row wrap>
+          <v-flex v-for="n in 9" :key="n" xs6>
+            <v-card flat tile class="pa-1">
+              <v-img
+                :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"
+                height="230px"
+              ></v-img>
+            </v-card>
+          </v-flex>
         </v-layout>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
