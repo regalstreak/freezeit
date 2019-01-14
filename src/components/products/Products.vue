@@ -1,19 +1,57 @@
 <template>
-  <div>
-    <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-      <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-        <v-img height="250" contain :src="image.link" alt/>
-      </swiper-slide>
-      <div class="swiper-button-next" slot="button-next"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-    </swiper>
+  <v-layout column>
+    <div>
+      <swiper :options="swiperOptionTop" class="gallery-top pt-3" ref="swiperTop">
+        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
+          <v-img height="200" contain :src="image.link" alt/>
+        </swiper-slide>
+        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+      </swiper>
 
-    <swiper :options="swiperOptionThumbs" class="gallery-thumbs pt-3" ref="swiperThumbs">
-      <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-        <v-img height="65" contain :src="image.link" alt/>
-      </swiper-slide>
-    </swiper>
-  </div>
+      <swiper :options="swiperOptionThumbs" class="gallery-thumbs py-4" ref="swiperThumbs">
+        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
+          <v-img height="55" contain :src="image.link" alt/>
+        </swiper-slide>
+      </swiper>
+    </div>
+
+    <v-card class="mx-2">
+      <v-card-title>
+        <div>
+          <span class="headline font-weight-bold">{{ product.name }}</span>
+
+          <div>
+            MRP:
+            <strike>Rs 37</strike>&nbsp;
+            <span class="headline font-weight-bold">Rs 29</span> &nbsp;
+            <font color="red">22% OFF</font>
+            <br>
+            <div>Inclusive of all taxes</div>
+          </div>
+        </div>
+
+        <v-spacer/>
+        <v-btn>Add</v-btn>
+      </v-card-title>
+
+      <v-card-actions>
+        <v-list-tile class="grow">
+          <v-list-tile-content>
+            <v-list-tile-title>Evan You</v-list-tile-title>
+          </v-list-tile-content>
+
+          <v-layout align-center justify-end>
+            <v-icon class="mr-1">mdi-heart</v-icon>
+            <span class="subheading mr-2">256</span>
+            <span class="mr-1">·</span>
+            <v-icon class="mr-1">mdi-share-variant</v-icon>
+            <span class="subheading">45</span>
+          </v-layout>
+        </v-list-tile>
+      </v-card-actions>
+    </v-card>
+  </v-layout>
 </template>
 
 <script>
@@ -28,7 +66,7 @@ export default {
 
   data: () => ({
     product: {
-      name: "product name",
+      name: "Spinach",
       images: [
         {
           index: 0,
