@@ -1,17 +1,33 @@
 <template>
   <v-layout column>
     <div>
-      <swiper :options="swiperOptionTop" class="gallery-top pt-3" ref="swiperTop">
-        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-          <v-img height="200" contain :src="image.link" alt/>
+      <swiper
+        :options="swiperOptionTop"
+        class="gallery-top pt-3"
+        ref="swiperTop"
+      >
+        <swiper-slide
+          v-for="image in product.images"
+          :key="image.index"
+          class="slide-img"
+        >
+          <v-img height="200" contain :src="image.link" alt />
         </swiper-slide>
         <div class="swiper-button-next" slot="button-next"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
       </swiper>
 
-      <swiper :options="swiperOptionThumbs" class="gallery-thumbs py-4" ref="swiperThumbs">
-        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-          <v-img height="55" contain :src="image.link" alt/>
+      <swiper
+        :options="swiperOptionThumbs"
+        class="gallery-thumbs py-4"
+        ref="swiperThumbs"
+      >
+        <swiper-slide
+          v-for="image in product.images"
+          :key="image.index"
+          class="slide-img"
+        >
+          <v-img height="55" contain :src="image.link" alt />
         </swiper-slide>
       </swiper>
     </div>
@@ -27,12 +43,12 @@
               <strike>Rs 37</strike>&nbsp;
               <span class="headline font-weight-bold">Rs 29</span> &nbsp;
               <font color="red">22% OFF</font>
-              <br>
+              <br />
               <div>Inclusive of all taxes</div>
             </div>
           </div>
 
-          <v-spacer/>
+          <v-spacer />
           <v-btn round>Add</v-btn>
         </v-card-title>
 
@@ -46,7 +62,11 @@
 
             <v-flex xs4 class="pl-2">
               <span>
-                <v-text-field single-line label="Pincode" mask="######"></v-text-field>
+                <v-text-field
+                  single-line
+                  label="Pincode"
+                  mask="######"
+                ></v-text-field>
               </span>
             </v-flex>
 
@@ -84,9 +104,10 @@
           <v-card-text>
             <swiper :options="swiperOptionSimilar">
               <swiper-slide v-for="i in 10" :key="i">
-                <h4 class="text-xs-center">Similar Product {{i}}</h4>
-                <v-img height="150" contain :src="product.images[2].link" alt/>
+                <h4 class="text-xs-center">Similar Product {{ i }}</h4>
+                <v-img height="150" contain :src="product.images[2].link" alt />
               </swiper-slide>
+
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev-similar" slot="button-prev"></div>
               <div class="swiper-button-next-similar" slot="button-next"></div>

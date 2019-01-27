@@ -5,7 +5,7 @@ import Categories from "./components/categories/Categories.vue";
 import Search from "./components/search/Search.vue";
 import Cart from "./components/cart/Cart.vue";
 import Account from "./components/account/Account.vue";
-import Products from "./components/products/Products.vue";
+import Product from "./components/products/Product.vue";
 
 Vue.use(Router);
 
@@ -40,9 +40,9 @@ export default new Router({
     },
 
     {
-      path: "/products",
-      name: "Products",
-      component: Products
+      path: "/product",
+      name: "Product",
+      component: Product
     }
   ]
 });

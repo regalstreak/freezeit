@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
 
-    <v-bottom-nav app fixed value="true" >
+    <v-bottom-nav app fixed value="true">
       <v-btn to="/" color="teal" flat value="Home">
         <span>Home</span>
         <v-icon>home</v-icon>
@@ -42,5 +42,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
