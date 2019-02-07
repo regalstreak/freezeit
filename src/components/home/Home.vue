@@ -2,12 +2,7 @@
   <v-container>
     <v-layout column>
       <router-link to="/search">
-        <v-text-field
-          readonly
-          label="Search"
-          solo
-          append-icon="search"
-        ></v-text-field>
+        <v-text-field readonly label="Search" solo append-icon="search"></v-text-field>
       </router-link>
 
       <v-carousel height="200" hide-delimiters>
@@ -21,16 +16,12 @@
       </v-carousel>
 
       <v-card class="recommendations my-3">
-        <br />
-        <h1 style="color: white;" class="text-xs-center py-5">
-          Recommendations
-        </h1>
+        <br>
+        <h1 style="color: white;" class="text-xs-center py-5">Recommendations</h1>
       </v-card>
 
       <v-card class="categoriesHeader mb-3">
-        <h2 style="color: white;" class="text-xs-center py-3">
-          Browse by category:
-        </h2>
+        <h2 style="color: white;" class="text-xs-center py-3">Browse by category:</h2>
       </v-card>
 
       <v-layout>
@@ -54,7 +45,18 @@
 </template>
 
 <script>
+import firebaseInstance from "../../firebase/config/firebaseExports.js";
+import "firebase/firestore";
+
 export default {
+  created() {
+    const vm = this;
+
+    this.$store.dispatch(
+      "setProducts",
+      firebaseInstance.firestore().collection("allProducts")
+    );
+  },
   data() {
     return {
       items: [

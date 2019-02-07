@@ -1,33 +1,17 @@
 <template>
   <v-layout column>
     <div>
-      <swiper
-        :options="swiperOptionTop"
-        class="gallery-top pt-3"
-        ref="swiperTop"
-      >
-        <swiper-slide
-          v-for="image in product.images"
-          :key="image.index"
-          class="slide-img"
-        >
-          <v-img height="200" contain :src="image.link" alt />
+      <swiper :options="swiperOptionTop" class="gallery-top pt-3" ref="swiperTop">
+        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
+          <v-img height="200" contain :src="image.link" alt/>
         </swiper-slide>
         <div class="swiper-button-next" slot="button-next"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
       </swiper>
 
-      <swiper
-        :options="swiperOptionThumbs"
-        class="gallery-thumbs py-4"
-        ref="swiperThumbs"
-      >
-        <swiper-slide
-          v-for="image in product.images"
-          :key="image.index"
-          class="slide-img"
-        >
-          <v-img height="55" contain :src="image.link" alt />
+      <swiper :options="swiperOptionThumbs" class="gallery-thumbs py-4" ref="swiperThumbs">
+        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
+          <v-img height="55" contain :src="image.link" alt/>
         </swiper-slide>
       </swiper>
     </div>
@@ -36,19 +20,19 @@
       <v-card>
         <v-card-title>
           <div>
-            <span class="headline font-weight-bold">{{ product.name }}</span>
+            <span class="headline font-weight-bold">{{ storeAllProducts[findProductIndex].productName }}</span>
 
             <div>
               MRP:
-              <strike>Rs 37</strike>&nbsp;
-              <span class="headline font-weight-bold">Rs 29</span> &nbsp;
+              <strike>{{storeAllProducts[findProductIndex].productOldPrice }}</strike>&nbsp;
+              <span class="headline font-weight-bold">Rs {{storeAllProducts[findProductIndex].productPrice }}</span> &nbsp;
               <font color="red">22% OFF</font>
-              <br />
+              <br>
               <div>Inclusive of all taxes</div>
             </div>
           </div>
 
-          <v-spacer />
+          <v-spacer/>
           <v-btn round>Add</v-btn>
         </v-card-title>
 
@@ -62,11 +46,7 @@
 
             <v-flex xs4 class="pl-2">
               <span>
-                <v-text-field
-                  single-line
-                  label="Pincode"
-                  mask="######"
-                ></v-text-field>
+                <v-text-field single-line label="Pincode" mask="######"></v-text-field>
               </span>
             </v-flex>
 
@@ -88,9 +68,9 @@
             </v-tabs>
 
             <v-tabs-items v-model="tabs">
-              <v-tab-item>{{ product.information.about }}</v-tab-item>
-              <v-tab-item>{{ product.information.ingredients }}</v-tab-item>
-              <v-tab-item>{{ product.information.nutrifact }}</v-tab-item>
+              <v-tab-item>{{ storeAllProducts[findProductIndex].productAbout }}</v-tab-item>
+              <v-tab-item>{{ storeAllProducts[findProductIndex].productIngredients }}</v-tab-item>
+              <v-tab-item>{{ storeAllProducts[findProductIndex].productNutrition }}</v-tab-item>
             </v-tabs-items>
           </v-card-text>
         </v-card>
@@ -105,7 +85,7 @@
             <swiper :options="swiperOptionSimilar">
               <swiper-slide v-for="i in 10" :key="i">
                 <h4 class="text-xs-center">Similar Product {{ i }}</h4>
-                <v-img height="150" contain :src="product.images[2].link" alt />
+                <v-img height="150" contain :src="product.images[2].link" alt/>
               </swiper-slide>
 
               <div class="swiper-pagination" slot="pagination"></div>
@@ -122,13 +102,26 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { mapState } from "vuex";
 
 export default {
   components: {
     swiper,
     swiperSlide
   },
-
+  computed: {
+    ...mapState({
+      storeAllProducts(state) {
+        return state.storeAllProducts;
+      }
+    }),
+    findProductIndex() {
+      const vm = this;
+      return this.storeAllProducts.findIndex(
+        x => x.productID == vm.$route.params.productID
+      );
+    }
+  },
   data: () => ({
     tabs: null,
     product: {
