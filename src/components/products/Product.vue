@@ -2,16 +2,24 @@
   <v-layout column>
     <div>
       <swiper :options="swiperOptionTop" class="gallery-top pt-3" ref="swiperTop">
-        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-          <v-img height="200" contain :src="image.link" alt/>
+        <swiper-slide
+          v-for="(image, index) in storeAllProducts[findProductIndex].productImageUrls"
+          :key="index"
+          class="slide-img"
+        >
+          <v-img height="200" contain :src="image" alt/>
         </swiper-slide>
         <div class="swiper-button-next" slot="button-next"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
       </swiper>
 
       <swiper :options="swiperOptionThumbs" class="gallery-thumbs py-4" ref="swiperThumbs">
-        <swiper-slide v-for="image in product.images" :key="image.index" class="slide-img">
-          <v-img height="55" contain :src="image.link" alt/>
+        <swiper-slide
+          v-for="(image, index) in storeAllProducts[findProductIndex].productImageUrls"
+          :key="index"
+          class="slide-img"
+        >
+          <v-img height="55" contain :src="image" alt/>
         </swiper-slide>
       </swiper>
     </div>
@@ -20,12 +28,16 @@
       <v-card>
         <v-card-title>
           <div>
-            <span class="headline font-weight-bold">{{ storeAllProducts[findProductIndex].productName }}</span>
+            <span
+              class="headline font-weight-bold"
+            >{{ storeAllProducts[findProductIndex].productName }}</span>
 
             <div>
               MRP:
               <strike>{{storeAllProducts[findProductIndex].productOldPrice }}</strike>&nbsp;
-              <span class="headline font-weight-bold">Rs {{storeAllProducts[findProductIndex].productPrice }}</span> &nbsp;
+              <span
+                class="headline font-weight-bold"
+              >Rs {{storeAllProducts[findProductIndex].productPrice }}</span> &nbsp;
               <font color="red">22% OFF</font>
               <br>
               <div>Inclusive of all taxes</div>
@@ -33,7 +45,7 @@
           </div>
 
           <v-spacer/>
-          <v-btn round>Add</v-btn>
+          <v-btn round @click="addProduct()">Add</v-btn>
         </v-card-title>
 
         <v-divider></v-divider>
@@ -101,13 +113,13 @@
 
 <script>
 import "swiper/dist/css/swiper.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { mapState } from "vuex";
 
 export default {
-  components: {
-    swiper,
-    swiperSlide
+  methods: {
+    addProduct() {
+      this.$store.commit("addCartProducts", this.storeAllProducts[this.findProductIndex])
+    }
   },
   computed: {
     ...mapState({
@@ -188,12 +200,16 @@ export default {
     }
   }),
   mounted() {
-    this.$nextTick(() => {
-      const swiperTop = this.$refs.swiperTop.swiper;
-      const swiperThumbs = this.$refs.swiperThumbs.swiper;
-      swiperTop.controller.control = swiperThumbs;
-      swiperThumbs.controller.control = swiperTop;
-    });
+    this.$nextTick()
+      .then(() => {
+        const swiperTop = this.$refs.swiperTop.swiper;
+        const swiperThumbs = this.$refs.swiperThumbs.swiper;
+        swiperTop.controller.control = swiperThumbs;
+        swiperThumbs.controller.control = swiperTop;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>

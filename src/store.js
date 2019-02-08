@@ -11,9 +11,24 @@ const store = new Vuex.Store({
   state: {
     bottomNavComponent: "Home",
     storeAllProducts: null,
+    cartProducts: {}
   },
   mutations: {
     ...firebaseMutations,
+    addCartProducts(state, cartProductToAdd) {
+      if (cartProductToAdd.productID in state.cartProducts) {
+
+        state.cartProducts[cartProductToAdd.productID].productQuantity++;
+        console.log("AAA")
+      } else {
+        state.cartProducts[cartProductToAdd.productID] = cartProductToAdd;
+        state.cartProducts[cartProductToAdd.productID].productQuantity = 1;
+        console.log("BBB")
+      }
+    },
+    removeCartProducts(state, cartProductToRemove) {
+      delete state.cartProducts[cartProductToRemove.productID];
+    }
   },
   actions: {
     setProductCats: firebaseAction(({ bindFirebaseRef }, ref) => {
