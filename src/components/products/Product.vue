@@ -45,7 +45,7 @@
           </div>
 
           <v-spacer/>
-          <v-btn round @click="addProduct()">Add</v-btn>
+          <add :product="storeAllProducts[findProductIndex]"></add>
         </v-card-title>
 
         <v-divider></v-divider>
@@ -97,7 +97,12 @@
             <swiper :options="swiperOptionSimilar">
               <swiper-slide v-for="i in 10" :key="i">
                 <h4 class="text-xs-center">Similar Product {{ i }}</h4>
-                <v-img height="150" contain :src="product.images[2].link" alt/>
+                <v-img
+                  height="150"
+                  contain
+                  :src="storeAllProducts[findProductIndex].productImageUrls[0]"
+                  alt
+                />
               </swiper-slide>
 
               <div class="swiper-pagination" slot="pagination"></div>
@@ -113,92 +118,47 @@
 
 <script>
 import "swiper/dist/css/swiper.css";
-import { mapState } from "vuex";
+import Add from "./views/Add.vue";
+import { storeStuffMixin } from "../../mixins.js";
 
 export default {
-  methods: {
-    addProduct() {
-      this.$store.commit("addCartProducts", this.storeAllProducts[this.findProductIndex])
-    }
+  mixins: [storeStuffMixin],
+  components: {
+    Add
   },
-  computed: {
-    ...mapState({
-      storeAllProducts(state) {
-        return state.storeAllProducts;
-      }
-    }),
-    findProductIndex() {
-      const vm = this;
-      return this.storeAllProducts.findIndex(
-        x => x.productID == vm.$route.params.productID
-      );
-    }
-  },
-  data: () => ({
-    tabs: null,
-    product: {
-      name: "Spinach",
-      images: [
-        {
-          index: 0,
-          link:
-            "https://d2ebzu6go672f3.cloudfront.net/media/content/images/p7_LeafyGreens_H1809_gi114333724.jpg"
-        },
-        {
-          index: 1,
-          link:
-            "https://www.martindalesnutrition.com/wp-content/uploads/2018/07/spinach.jpg"
-        },
-        {
-          index: 2,
-          link:
-            "https://img.etimg.com/thumb/msid-67161908,width-643,imgsize-733681,resizemode-4/green-leafy-vegetables.jpg"
-        },
-        {
-          index: 3,
-          link:
-            "https://dingo.care2.com/pictures/greenliving/uploads/2012/11/kale2.jpg"
+  data() {
+    return {
+      tabs: null,
+      swiperOptionTop: {
+        spaceBetween: 20,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
         }
-      ],
-      information: {
-        about:
-          "About product: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed quam et velit placerat rhoncus. Mauris non turpis posuere, suscipit elit sed, gravida velit. Fusce ornare dapibus risus, id condimentum velit feugiat ac. Integer commodo eros neque, vel pulvinar sapien ornare in. Maecenas odio ante, posuere sit amet condimentum vitae, maximus ac enim. Fusce in tincidunt metus. Cras vel blandit lorem. Curabitur rhoncus cursus auctor. Donec ullamcorper turpis et diam dapibus euismod. Pellentesque at purus enim. Cras maximus sollicitudin lorem, non varius justo euismod nec. Phasellus ex ipsum, efficitur eget lacinia hendrerit, ultrices vitae dolor. Donec at justo pulvinar dui tincidunt bibendum eget quis magna. ",
-        ingredients:
-          "Ingredients product: Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam faucibus, quam ut dignissim scelerisque, leo nisi venenatis neque, sit amet imperdiet libero magna a massa. Nullam ac sodales magna. Maecenas blandit metus dolor, vitae accumsan ex laoreet et. Cras convallis quam risus, et semper nisl mattis vitae. Vivamus arcu nisl, ultricies tempor urna nec, scelerisque fermentum ipsum. Curabitur porttitor turpis ac eros consequat efficitur. Pellentesque et augue et tortor commodo feugiat. Ut arcu arcu, mattis vel massa eu, interdum congue diam. Donec a justo nulla. Donec eleifend nisi velit, at faucibus ligula ultricies vitae. Morbi hendrerit scelerisque velit sit amet facilisis. Morbi sit amet neque nisl. Curabitur sed massa metus. Suspendisse hendrerit diam sed porttitor tristique. ",
-        nutrifact:
-          "Nutri Fact product  Vivamus tincidunt sapien nisi, ut congue massa tincidunt quis. Morbi venenatis non tellus vel vehicula. Donec id dolor eu diam malesuada porta. Nulla tristique, lorem sed auctor condimentum, urna nulla blandit justo, eget sagittis turpis lacus at erat. Nullam hendrerit sagittis mi, sit amet condimentum odio tincidunt in. Aliquam erat volutpat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam sed justo sit amet est viverra posuere in quis libero. Vestibulum arcu lectus, suscipit vel libero ac, porttitor elementum eros. Nullam malesuada diam augue, vel sodales mauris condimentum at. Nulla rhoncus mi mi, nec consequat nibh rutrum sed. "
-      }
-    },
-
-    swiperOptionTop: {
-      spaceBetween: 20,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
-    },
-    swiperOptionThumbs: {
-      spaceBetween: 20,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      touchRatio: 0.2,
-      slideToClickedSlide: true
-    },
-
-    swiperOptionSimilar: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
       },
-      navigation: {
-        nextEl: ".swiper-button-next-similar",
-        prevEl: ".swiper-button-prev-similar"
+      swiperOptionThumbs: {
+        spaceBetween: 20,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+      },
+
+      swiperOptionSimilar: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next-similar",
+          prevEl: ".swiper-button-prev-similar"
+        }
       }
-    }
-  }),
+    };
+  },
   mounted() {
     this.$nextTick()
       .then(() => {

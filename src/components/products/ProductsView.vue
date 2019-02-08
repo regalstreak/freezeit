@@ -22,14 +22,7 @@
                   </v-flex>
                   <v-flex>
                     <v-spacer></v-spacer>
-                    <v-btn
-                      absolute
-                      color="teal"
-                      @click="addProduct()"
-                      round
-                      right
-                      class="white--text ma-2"
-                    >add</v-btn>
+                    <add :product="product"></add>
                   </v-flex>
                 </v-layout>
               </v-card-title>
@@ -43,8 +36,12 @@
 
 <script>
 import { mapState } from "vuex";
+import Add from "./views/Add.vue";
 
 export default {
+  components: {
+    Add
+  },
   methods: {
     addProduct() {
       console.log("Add");
@@ -57,7 +54,7 @@ export default {
       //     productId: product.productName
       //   }
       // });
-      this.$router.push("/products/" + product.productID)
+      this.$router.push("/products/" + product.productID);
     }
   },
   computed: {

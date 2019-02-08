@@ -15,15 +15,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     ...firebaseMutations,
-    addCartProducts(state, cartProductToAdd) {
-      if (cartProductToAdd.productID in state.cartProducts) {
-
-        state.cartProducts[cartProductToAdd.productID].productQuantity++;
-        console.log("AAA")
+    addCartProducts(state, payload) {
+      if (payload.productPayload.productID in state.cartProducts) {
+        state.cartProducts[payload.productPayload.productID].productQuantity
+          =
+          state.cartProducts[payload.productPayload.productID].productQuantity + payload.quantity;
       } else {
-        state.cartProducts[cartProductToAdd.productID] = cartProductToAdd;
-        state.cartProducts[cartProductToAdd.productID].productQuantity = 1;
-        console.log("BBB")
+        state.cartProducts[payload.productPayload.productID] = payload.productPayload;
+        state.cartProducts[payload.productPayload.productID].productQuantity = 1;
       }
     },
     removeCartProducts(state, cartProductToRemove) {

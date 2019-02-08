@@ -22,14 +22,7 @@
                   </v-flex>
                   <v-flex>
                     <v-spacer></v-spacer>
-                    <v-btn
-                      absolute
-                      color="red"
-                      @click="removeProduct(product)"
-                      round
-                      right
-                      class="white--text ma-2"
-                    >remove</v-btn>
+                    <add :product="product"></add>
                   </v-flex>
                 </v-layout>
               </v-card-title>
@@ -43,8 +36,9 @@
 
 <script>
 import { mapState } from "vuex";
-
+import Add from "../products/views/Add.vue";
 export default {
+  components: { Add },
   methods: {
     removeProduct(product) {
       console.log("Remove");
