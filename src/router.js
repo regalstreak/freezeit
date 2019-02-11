@@ -4,7 +4,9 @@ import Home from "./components/home/Home.vue";
 import Categories from "./components/categories/Categories.vue";
 import Search from "./components/search/Search.vue";
 import Cart from "./components/cart/Cart.vue";
+
 import Account from "./components/account/Account.vue";
+import Orders from "./components/account/Orders.vue";
 
 import Product from "./components/products/Product.vue";
 import ProductInterstitial from "./components/products/ProductInterstitial.vue";
@@ -42,13 +44,23 @@ export default new Router({
     {
       path: "/account",
       name: "Account",
-      component: Account,
+      component: ProductInterstitial,
       beforeEnter: (to, from, next) => {
         firebaseInstance.auth().onAuthStateChanged(() => {
           console.log("On auth state change called");
           next();
         })
-      }
+      },
+      children: [
+        {
+          path: "",
+          component: Account,
+        },
+        {
+          path: "orders",
+          component: Orders
+        }
+      ]
     },
     {
       path: "/products",

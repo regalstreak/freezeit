@@ -66,6 +66,7 @@ export default {
       this.$store.commit("addCartProducts", payload);
       this.checkProductInCart();
       this.quantityKey++;
+      this.$store.commit("changeCartKey");
     }
   }
 };

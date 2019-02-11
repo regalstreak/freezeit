@@ -1,0 +1,14 @@
+[debug] [2019-02-11T09:12:18.050Z] ----------------------------------------------------------------------
+[debug] [2019-02-11T09:12:18.053Z] Command:       /home/regalstreak/.nvm/versions/node/v11.8.0/bin/node /home/regalstreak/.nvm/versions/node/v11.8.0/bin/firebase deploy --only functions
+[debug] [2019-02-11T09:12:18.054Z] CLI Version:   6.3.0
+[debug] [2019-02-11T09:12:18.054Z] Platform:      linux
+[debug] [2019-02-11T09:12:18.054Z] Node Version:  v11.8.0
+[debug] [2019-02-11T09:12:18.054Z] Time:          Mon Feb 11 2019 14:42:18 GMT+0530 (India Standard Time)
+[debug] [2019-02-11T09:12:18.054Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-11T09:12:18.068Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-11T09:12:18.068Z] > authorizing via signed-in user
+[debug] [2019-02-11T09:12:18.068Z] [iam] checking project freezeit-8be41 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2019-02-11T09:12:18.071Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/freezeit-8be41:testIamPermissions  
+
+[debug] [2019-02-11T09:12:20.295Z] <<< HTTP RESPONSE 200

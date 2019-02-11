@@ -15,7 +15,7 @@
                     <div>MRP:
                       <strike>Rs {{product.productOldPrice }}</strike>
                       <br>
-                      <span class="headline font-weight-bold">Rs {{product.productPrice }}</span> &nbsp;
+                      <span class="headline font-weight-bold">Rs {{ product.productPrice }}</span> &nbsp;
                       <br>
                       <div>Inclusive of all taxes</div>
                     </div>
@@ -49,15 +49,13 @@ export default {
       this.$router.push("/products/" + product.productID);
     }
   },
-  data() {
-    return {
-      cartKey: 0
-    };
-  },
   computed: {
     ...mapState({
       cartProducts(state) {
         return state.cartProducts;
+      },
+      cartKey(state) {
+        return state.cartKey;
       }
     })
   }
