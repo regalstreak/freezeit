@@ -30,6 +30,16 @@
           </v-layout>
         </v-card>
       </v-flex>
+      <v-btn
+        round
+        fixed
+        bottom
+        class="mb-5 checkout-btn"
+        color="teal"
+        ref="rzp-button1"
+        @click.prevent="checkout()"
+        dark
+      >Checkout</v-btn>
     </v-layout>
   </v-container>
 </template>
@@ -47,6 +57,30 @@ export default {
     },
     navigateProduct(product) {
       this.$router.push("/products/" + product.productID);
+    },
+    checkout(event) {
+      var options = {
+        key: "rzp_test_d8HlXcydkKLoFA",
+        amount: "2000", // 2000 paise = INR 20
+        name: "Merchant Name",
+        description: "Purchase Description",
+        image: "/your_logo.png",
+        handler: function(response) {
+          alert(response.razorpay_payment_id);
+        },
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "test@test.com"
+        },
+        notes: {
+          address: "Hello World"
+        },
+        theme: {
+          color: "#F37254"
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
     }
   },
   computed: {
@@ -58,8 +92,22 @@ export default {
         return state.cartKey;
       }
     })
+  },
+  mounted() {
+    let razorpayScript = document.createElement("script");
+    razorpayScript.setAttribute(
+      "src",
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    document.head.appendChild(razorpayScript);
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.checkout-btn {
+  left: calc(50% - 20vh);
+  width: 40vh;
+  opacity: 0.8;
+}
+</style>

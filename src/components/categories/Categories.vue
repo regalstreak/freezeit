@@ -13,12 +13,11 @@
             v-for="(category, key , index) in productCatsAndSubs"
             :key="index"
           >
-            <div slot="header">{{ key }} {{index}}</div>
+            <div slot="header">{{ key }}</div>
             <v-card v-for="(subcategory, subcatkey ,subcatindex) in category" :key="subcatindex">
               <v-divider></v-divider>
-              <v-card-text>{{ subcategory }}</v-card-text>
+              <v-card-text @click="goToSubCategory(key, subcategory)">{{ subcategory }}</v-card-text>
             </v-card>
-            
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
@@ -29,7 +28,10 @@
 <script>
 import firebaseInstance from "../../firebase/config/firebaseExports.js";
 import "firebase/firestore";
+import { loadingCategoryProducts } from "../../mixins.js";
+
 export default {
+  mixins: [loadingCategoryProducts],
   data() {
     return {
       firebaseProductCategories: [],
@@ -41,11 +43,43 @@ export default {
   methods: {
     forceRenderCat() {
       this.expKey += 1;
+    },
+    goToSubCategory(category, subcategory) {
+      console.log(category + "   " + subcategory);
+
+      let subcatproducts = [];
+      this.loading = true;
+
+      firebaseInstance
+        .firestore()
+        .collection(
+          "categories/" +
+            category +
+            "/subCategories/" +
+            subcategory +
+            "/products"
+        )
+        .get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            if (subcatproducts.indexOf(doc.data()) === -1) {
+              subcatproducts.push(doc.data());
+            } else {
+              console.log(doc.id + "Already exists in subcatproducts");
+            }
+          });
+        })
+        .then(() => {
+          this.loading = false;
+        });
+      this.$router.push({
+        name: "CategoryProducts",
+        params: { subcategory: subcategory, products: subcatproducts }
+      });
     }
   },
   created() {
     const vm = this;
-
     vm.firebaseProductCategories = [];
     vm.firebaseProductSubCategories = [];
 
@@ -56,14 +90,7 @@ export default {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          console.log(doc.id);
-          console.log(doc.data());
-
           vm.productCatsAndSubs[doc.id] = doc.data().subCategories;
-
-          // vm.firebaseProductCategories.indexOf(doc.id) === -1
-          //   ? vm.firebaseProductCategories.push(doc.id)
-          //   : console.log(doc.id + " already exists");
         });
       })
       // get sub categories
@@ -95,12 +122,3 @@ export default {
   }
 };
 </script>
-
-{
-  "catag": {
-    subCats: 
-  }
-  "catag": [""]
-  "catag": [""]
-
-}

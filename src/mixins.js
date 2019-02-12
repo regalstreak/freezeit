@@ -31,3 +31,11 @@ export const add = {
         }
     },
 }
+
+export const loadingCategoryProducts = {
+    data() {
+        return {
+            loading: true
+        }
+    }
+}

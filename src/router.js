@@ -1,9 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./components/home/Home.vue";
-import Categories from "./components/categories/Categories.vue";
 import Search from "./components/search/Search.vue";
 import Cart from "./components/cart/Cart.vue";
+
+import Categories from "./components/categories/Categories.vue";
+import CategoryProducts from "./components/categories/CategoryProducts.vue";
+
 
 import Account from "./components/account/Account.vue";
 import Orders from "./components/account/Orders.vue";
@@ -28,8 +31,20 @@ export default new Router({
     },
     {
       path: "/categories",
-      name: "Categories",
-      component: Categories
+      component: ProductInterstitial,
+      children: [
+        {
+          path: "",
+          component: Categories,
+          name: "Categories"
+        },
+        {
+          path: ":subcategory",
+          component: CategoryProducts,
+          props: true,
+          name: "CategoryProducts"
+        }
+      ]
     },
     {
       path: "/search",
