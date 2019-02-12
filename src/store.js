@@ -28,6 +28,7 @@ const store = new Vuex.Store({
       if (payload.productPayload.productID in state.cartProducts) {
         if (payload.quantity < 0 && state.cartProducts[payload.productPayload.productID].productQuantity <= 1) {
           delete state.cartProducts[payload.productPayload.productID];
+          state.cartKey++;
         } else {
           state.cartProducts[payload.productPayload.productID].productQuantity
             =
@@ -38,9 +39,6 @@ const store = new Vuex.Store({
         state.cartProducts[payload.productPayload.productID].productQuantity = 1;
       }
     },
-    changeCartKey(state) {
-      state.cartKey++;
-    }
   },
   actions: {
     setProductCats: firebaseAction(({ bindFirebaseRef }, ref) => {
